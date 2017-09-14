@@ -24,14 +24,13 @@ public class PasswordGenerator {
 			return;
 		}
 		Random rand = new Random();
-		int firstString = rand.nextInt(records.size());
-		int secondString = rand.nextInt(records.size());
+		String firstString = records.get(rand.nextInt(records.size()));
+		String secondString = records.get(rand.nextInt(records.size()));
 		int firstNumber = rand.nextInt(99);
 		int secondNumber = rand.nextInt(99);
-		
-		String output = records.get(firstString) + Integer.toString(firstNumber) + 
-				records.get(secondString) + Integer.toString(secondNumber);
-		
-		System.out.println(output);
+		String firstNumberString = firstNumber <=9 ? "0" + Integer.toString(firstNumber) : Integer.toString(firstNumber);
+		String secondNumberString = secondNumber <=9 ? "0" + Integer.toString(secondNumber) : Integer.toString(secondNumber);
+
+		System.out.println(firstString + firstNumberString + secondString + secondNumberString);
 	}
 }
