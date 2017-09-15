@@ -3,13 +3,15 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class PasswordGenerator {
 	private static String filename = "/home/brian/eclipse/eclipse-workspace/PasswordGen/src/WordList.txt";
+	private static List<String> records = new ArrayList<String>();
 	//private static String filename = "WordList.txt";
 	
 	public static void main(String[] args) {
-		List<String> records = new ArrayList<String>();
+
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(filename));
 			String line;
@@ -23,14 +25,36 @@ public class PasswordGenerator {
 			e.printStackTrace();
 			return;
 		}
+		Scanner keyboard = new Scanner(System.in);
+		String result = "";
+		
+		System.out.println("Enter the number of words");
+		int numWords = keyboard.nextInt();
+		while(numWords < 1) {
+			System.out.println("Must be greater than 0");
+			numWords = keyboard.nextInt();
+		}
+		
+		System.out.println("Max number");
+		int maxNum = keyboard.nextInt();
+		while(maxNum < 2) {
+			System.out.println("Must be greater than 1");
+			maxNum = keyboard.nextInt();
+		}
+		keyboard.close();
+		for(int i = 0; i < numWords; i++) {
+			result += makePart(maxNum);
+		}
+		System.out.println(result);
+	}
+	
+	private static String makePart(int maxNum) {
 		Random rand = new Random();
-		String firstString = records.get(rand.nextInt(records.size()));
-		String secondString = records.get(rand.nextInt(records.size()));
-		int firstNumber = rand.nextInt(99);
-		int secondNumber = rand.nextInt(99);
-		String firstNumberString = firstNumber <=9 ? "0" + Integer.toString(firstNumber) : Integer.toString(firstNumber);
-		String secondNumberString = secondNumber <=9 ? "0" + Integer.toString(secondNumber) : Integer.toString(secondNumber);
-
-		System.out.println(firstString + firstNumberString + secondString + secondNumberString);
+		String s = records.get(rand.nextInt(records.size()));
+		int n = rand.nextInt(maxNum);
+		Integer.toString(n);
+		String numString = String.format("%0" + Integer.toString(maxNum).length() + "d", n);
+		
+		return s + numString;
 	}
 }
